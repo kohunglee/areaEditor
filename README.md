@@ -1,6 +1,8 @@
 # areaEditor
 A lightweight (&lt;2kb) mini web-based editor using JavaScript to enhance &lt;textarea> with smart indentation &amp; bracket pairing for smoother coding.
 
+![image](https://github.com/user-attachments/assets/fcb09041-6a9e-4ca8-96fa-9261780089af)
+
 # demo
 
 https://www.ccgxk.com/areaEditorjs.html
@@ -68,7 +70,47 @@ After pressing Enter:
 
 ![image](https://github.com/user-attachments/assets/11709e89-c9e3-4b32-aa5e-4cb4a98b273c)
 
+
 ## How to Include the Code‌
+
+### 1.Download from GitHub
+Download the complete package from https://github.com/kohunglee/areaEditor or [click here to download].
+
+### 2.Import via jsDelivr
+
+We provide three versions of the file:
+
+- Development version (with comments, raw version 7.8KB)
+- Standard minified version (3.23KB)
+- Ultra-minified version (1.74KB)
+
+Their respective jsDelivr URLs are:
+
+```markdown
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.min.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.x.min.js
+```
+
+### Activation Method
+
+You can use it in HTML like this:
+
+```html
+<textarea></textarea>
+<script src="https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.x.min.js" integrity="sha384-RTBPOUPVgzaOVDXWZ/mS0hvla8SOJ3IKws1/ZuALSn00+z7uFpCZinpacy7LIZzb" crossorigin="anonymous"></script>
+<script>
+    var editor = new AreaEditor('textarea');
+</script>
+```
+
+The parameter for AreaEditor() works the same way as document.querySelectorAll().
+
+```js
+var editor = new AreaEditor('textarea'); // Selects all textarea elements
+var editor = new AreaEditor('.code-editor'); // Selects all textarea elements with class "code-editor"
+var editor = new AreaEditor('#code-editor'); // Selects the textarea element with ID "code-editor"
+```‌
 
 ## Why This Design?‌
 

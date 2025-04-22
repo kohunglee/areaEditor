@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>code editor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .editor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        #code-editor {
+            width: calc(100% - 25px);
+            height: 300px;
+            padding: 10px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            tab-size: 4;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        
+        .status-bar {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        code {
+            background-color: antiquewhite;
+            font-size: 10px;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <textarea id="code-editor" placeholder="Please enter your code..."></textarea>
+        <div class="status-bar">Less than 2kb code editor | Press <code>Tab</code> to indent | Press <code>Tab + Shift</code> to unindent | Auto bracket pairing</div>
+    </div>
+
+
+    <script>
+
+"use strict";
+        document.getElementById('code-editor').value = 
+`function example() {
+    if (true) {
+        console.log("Hello, world!");
+        const arr = [1, 2, 3];
+    }
+}`;
+
+    </script>
+
+    <script src="../src/areaTest.1.0.x.min.js"></script>
+    <script>
+        var editor = new AreaEditor('textarea');
+    </script>
+</body>
+</html>

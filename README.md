@@ -106,8 +106,11 @@ You can use it in HTML like this:
 
 The parameter for `AreaEditor()` works the same way as `document.querySelectorAll()`.
 
-![image](https://github.com/user-attachments/assets/f12a3032-17b0-4205-a0dc-45914fd1455d)
-
+```JavaScript
+var editor = new AreaEditor('textarea'); // Selects all textarea elements
+var editor = new AreaEditor('.code-editor'); // Selects all textarea elements with class "code-editor"
+var editor = new AreaEditor('#code-editor'); // Selects the textarea element with ID "code-editor"
+```
 
 ## Why This Design?‌
 

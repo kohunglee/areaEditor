@@ -1,5 +1,5 @@
 # areaEditor
-A lightweight (&lt;2kb) web-based editor using JavaScript to enhance &lt;textarea> with smart indentation &amp; bracket pairing for smoother coding.
+A lightweight (&lt;2kb) mini web-based editor using JavaScript to enhance &lt;textarea> with smart indentation &amp; bracket pairing for smoother coding.
 
 # demo
 
@@ -18,22 +18,15 @@ Additionally, in the following scenario, pressing the `tab` key shifts the selec
 
 Before
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221705557NKzPT.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221705557NKzPT.png-testccgxk" alt="img">
-</a>
+![image](https://github.com/user-attachments/assets/ba5bc7a7-8061-4057-b8eb-249f3e11f74a)
 
 After
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221706527NPvAY.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221706527NPvAY.png-testccgxk" alt="img">
-</a>
-
+![image](https://github.com/user-attachments/assets/5e38fba0-3f09-4037-8938-7452ba29dfcd)
 
 Of course, pressing ‌`tab + shift‌` simultaneously shifts the indentation one unit to the left.
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221708057NxHqr.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221708057NxHqr.png-testccgxk" alt="img">
-</a>
+![image](https://github.com/user-attachments/assets/375f9301-b3f2-4ae9-b4aa-370a03c215cc)
 
 ### 2.Smart indentation detection‌
 
@@ -49,9 +42,7 @@ When typing symbols like  <code>{ } [ ] ( ) &lt; > ' " `</code> , it auto-comple
 
 Example
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221747037NcXxQ.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221747037NcXxQ.png-testccgxk" alt="img">
-</a>
+![image](https://github.com/user-attachments/assets/9a7e94a4-cc21-42ff-8e46-5742097a55b0)
 
 If you manually complete the symbol by typing it again, the auto-completion is ignored.
 
@@ -61,31 +52,21 @@ If you manually complete the symbol by typing it again, the auto-completion is i
 
 Before
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221733527NGm0I.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221733527NGm0I.png-testccgxk" alt="img">
-</a>
+![image](https://github.com/user-attachments/assets/9a6b22ac-a0a9-4ee3-92f4-8295c3ba7a42)
 
 After pressing Enter:
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221734197N99Yh.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221734197N99Yh.png-testccgxk" alt="img">
-</a>
+![image](https://github.com/user-attachments/assets/c3b9efde-0ea7-47d9-b69f-cb866f65ad1f)
 
 ‌Case 2‌: If the cursor is positioned right after an opening symbol (`{, [, (, or <`), pressing ‌Enter‌ also adds a new line with one indentation unit:
 
 Before
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221750047NyxYO.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221750047NyxYO.png-testccgxk" alt="img">
-</a>
-
+![image](https://github.com/user-attachments/assets/f2ac2573-fec0-42e5-9a4f-2ab3f67a8fcc)
 
 After pressing Enter:
 
-<a href="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221750437NkQw4.png">
-    <img loading="lazy" class="thisis-temp-class"   src="https://img1.ccgxk.com/ccgxk-oss/2025/04/202504221750437NkQw4.png-testccgxk" alt="img">
-</a>
-
+![image](https://github.com/user-attachments/assets/11709e89-c9e3-4b32-aa5e-4cb4a98b273c)
 
 ## How to Include the Code‌
 

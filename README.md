@@ -104,9 +104,9 @@ You can use it in HTML like this:
 </script>
 ```
 
-The parameter for AreaEditor() works the same way as document.querySelectorAll().
+The parameter for `AreaEditor()` works the same way as `document.querySelectorAll()`.
 
-```js
+```javascript
 var editor = new AreaEditor('textarea'); // Selects all textarea elements
 var editor = new AreaEditor('.code-editor'); // Selects all textarea elements with class "code-editor"
 var editor = new AreaEditor('#code-editor'); // Selects the textarea element with ID "code-editor"

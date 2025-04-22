@@ -12,7 +12,7 @@ https://www.ccgxk.com/areaEditorjs.html
 
 ## Features‌
 
-### 1.Press TAB for indentation control‌
+### 1. Press TAB for indentation control‌
 
 Pressing the `tab` key inserts one indentation unit.
 
@@ -30,7 +30,7 @@ Of course, pressing ‌`tab + shift‌` simultaneously shifts the indentation on
 
 ![image](https://github.com/user-attachments/assets/375f9301-b3f2-4ae9-b4aa-370a03c215cc)
 
-### 2.Smart indentation detection‌
+### 2. Smart indentation detection‌
 
 There are three common indentation types: four spaces, eight spaces, or one tab character (`\t`). So, which does `areaEditor.js` use?
 
@@ -38,7 +38,7 @@ By default, areaEditor.js uses ‌four spaces‌ (for an empty textbox), but it 
 
 Note: To avoid confusion, when pressing the ‌`backspace‌` key, it deletes spaces one by one rather than removing an entire indentation unit at once.
 
-### 3.Smart bracket pairing‌
+### 3. Smart bracket pairing‌
 
 When typing symbols like  <code>{ } [ ] ( ) &lt; > ' " `</code> , it auto-completes them like other code editors:
 
@@ -48,7 +48,7 @@ Example
 
 If you manually complete the symbol by typing it again, the auto-completion is ignored.
 
-### 4.Indentation after closing symbols‌
+### 4. Indentation after closing symbols‌
 
 ‌Case 1‌: If the cursor is between paired symbols like <code>{ }, [ ], ( ), or &lt; > </code>, pressing ‌Enter‌ automatically adds a new line with one indentation unit:
 
@@ -73,10 +73,10 @@ After pressing Enter:
 
 ## How to Include the Code‌
 
-### 1.Download from GitHub
+### 1. Download from GitHub
 Download the complete package from https://github.com/kohunglee/areaEditor or [click here to download].
 
-### 2.Import via jsDelivr
+### 2. Import via jsDelivr
 
 We provide three versions of the file:
 

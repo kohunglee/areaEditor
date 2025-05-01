@@ -98,7 +98,7 @@ You can use it in HTML like this:
 
 ```html
 <textarea></textarea>
-<script src="https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.x.min.js" integrity="sha384-RTBPOUPVgzaOVDXWZ/mS0hvla8SOJ3IKws1/ZuALSn00+z7uFpCZinpacy7LIZzb" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.x.min.js" integrity="sha384-+vfsvi7N0nVQf4Tblj94ynWzrYyimaK1LTSLBS5XYZ2LaDUEGc5OUADMEbTbTDrr" crossorigin="anonymous"></script>
 <script>
     var editor = new AreaEditor('textarea');
 </script>

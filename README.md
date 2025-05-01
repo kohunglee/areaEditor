@@ -87,9 +87,9 @@ We provide three versions of the file:
 Their respective jsDelivr URLs are:
 
 ```markdown
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.js
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.min.js
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.0.x.min.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.min.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.x.min.js
 ```
 
 ### Activation Method

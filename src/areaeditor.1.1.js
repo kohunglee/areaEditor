@@ -38,7 +38,7 @@
             }
     
             this.indentType = this._detectFirstIndent(this.element[_i].value);  // Indentation type
-            this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // 缩进字符
+            this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // Indentation character 
             this.tabLength = this.indentType.count;  // Length of indentataion character
             this.setupEvents(this.element[_i]);
         }
@@ -155,7 +155,7 @@
                         contentArr[_i] = this._removeLeadingSpaces(contentArr[_i], this.tabLength);
                     }
                     e.target.value = contentArr.join('\n');
-                    var lengthDiff = contentArrOriginal[startLine].length - contentArrOriginal[startLine].trimStart().length; // start 所在行有多少缩进
+                    var lengthDiff = contentArrOriginal[startLine].length - contentArrOriginal[startLine].trimStart().length; // Count indentation at start's line
                     var moveLength = Math.min(this.tabLength, lengthDiff);
                     var limitLineNum = this._arrSum(contentArr, startLine); // Calculate minimum reducible value for start (e.g. prevent start from moving from liune 5 to 4 when reducing indentation)
                     var startPoint = limitLineNum > start - moveLength - startLine ? limitLineNum + startLine : start - moveLength; // Handle case where selection starts at indentation(on whitespace)
@@ -186,7 +186,7 @@
             return { type: type, count: count };
             }
         }
-        return { type: 'space', count: 4 }; // 默认缩进是 4 个空格
+        return { type: 'space', count: 4 }; // Default indentation is 4 spaces
     };
 
      // Remove specified number of leading indentation character from text string

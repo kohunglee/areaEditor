@@ -103,7 +103,6 @@
             e.preventDefault();
             var pairChar = autoPairs[e.key]  || '';
             if (['"', "'", '`', ']', '}', ')', '>'].includes(e.key) && e.target.value.charAt(start) === e.key) {  // don't insert if next character is already the specified character
-
                 e.target.selectionStart = this.selectionEnd = start + 1;
                 return;
             }

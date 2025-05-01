@@ -137,10 +137,10 @@
                 if (nextChar === pairs[lastChar]) {  // 下一个字符是闭括号
                     newText = '\n' + indent + this.tabChar + '\n' + indent;
                 } else {
-                    newText = '\n' + ((lastChar !== '>') ? (indent + this.tabChar) : '') ;
+                    newText = '\n' + indent + ((lastChar !== '>') ? (this.tabChar) : '') ;
                 }
                 e.target.value = value.substring(0, start) + newText + value.substring(end);
-                e.target.selectionStart = e.target.selectionEnd = start + ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (indent.length + 1 + this.tabLength) : 1);
+                e.target.selectionStart = e.target.selectionEnd = start + indent.length + ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (1 + this.tabLength) : 1);
             } else {
                 newText = '\n' + indent;
                 e.target.value = value.substring(0, start) + newText + value.substring(end);

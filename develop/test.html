@@ -57,8 +57,10 @@
     
     AreaEditor.prototype.isPreventAuto = false;  // 是否阻止自动脚本
     
+    AreaEditor.prototype.isPreventKEY = ['Backspace', 'Delete', 'Meta', 'Control', 'ctrl'];
+    
     AreaEditor.prototype.onKeyUp = function(e) {
-        if(['Backspace', 'Delete', 'Shift', 'Meta', 'Control', 'ctrl'].includes(e.key)){
+        if(this.isPreventKEY.includes(e.key)){
             this.isPreventAuto = false;
         }
     }
@@ -147,7 +149,7 @@
         var end = e.target.selectionEnd;
         var value = e.target.value;
 
-        if(['Backspace', 'Delete', 'Shift', 'Meta', 'Control', 'ctrl'].includes(e.key)) {
+        if(this.isPreventKEY.includes(e.key)) {
             this.isPreventAuto = true;
         };
 

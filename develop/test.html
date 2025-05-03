@@ -1,4 +1,4 @@
-<textarea rows="30" cols="50"></textarea>
+<textarea rows="20" cols="50"></textarea>
 <script>
 /**
  * AreaEditor 1.1
@@ -55,24 +55,23 @@
         element.addEventListener('keyup', this.onKeyUp.bind(this));
     };
     
-    AreaEditor.prototype.currentKey = '';  // 当前的按键
+    AreaEditor.prototype.isPreventAuto = false;  // 是否阻止自动脚本
     
     AreaEditor.prototype.onKeyUp = function(e) {
-        if(['Control', 'Meta', 'Backspace'].includes(e.key)){
-            this.currentKey = '';
+        if(['Backspace', 'Delete', 'Shift', 'Meta', 'Control', 'ctrl'].includes(e.key)){
+            this.isPreventAuto = false;
         }
     }
     
     AreaEditor.prototype.onPaste = function(e) {
-        this.currentKey = 'preventType';
+        this.isPreventAuto = true;
     }
     
     AreaEditor.prototype.onInput = function(e) {
-        if(this.currentKey === 'preventType'){
-            this.currentKey = '';
+        if(this.isPreventAuto){
+            this.isPreventAuto = false;
             return;
         }
-        
         
         var start = e.target.selectionStart;
         var end = e.target.selectionEnd;
@@ -91,8 +90,11 @@
             '`': '`',
             '<': '>'
         };
-        
         if (['{', '(', '[', '<', '"', "'", '`', ']', '}', ')', '>'].includes(lastChar) && start === end) {
+            if(this.isPreventAuto){
+                this.isPreventAuto = false;
+                return;
+            }
             var pairChar = autoPairs[lastChar]  || '';
             for (var leftBrace in autoPairs) {
                 if (leftBrace === secondLastChar && autoPairs[leftBrace] === lastChar && nextChar === lastChar) {  // 如果已经补全，但依然手动补全，则忽略
@@ -104,24 +106,12 @@
             e.target.value = value.substring(0, start) + pairChar + value.substring(start);
             e.target.selectionStart = e.target.selectionEnd = start;
         }
-    }
-
-    AreaEditor.prototype.onKeyDown = function(e) {
-        var start = e.target.selectionStart;
-        var end = e.target.selectionEnd;
-        var value = e.target.value;
         
-        if(e.ctrlKey || e.metaKey || e.key === 'Backspace') {
-            this.currentKey = 'preventType';
-        };
-        
-
         // 回车键处理
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            
-            var lineStart = value.lastIndexOf('\n', start - 1) + 1;
-            var currentLine = value.substring(lineStart, start);
+        if (lastChar === '\n') {
+
+            var lineStart = value.lastIndexOf('\n', start - 2) + 1;
+            var currentLine = value.substring(lineStart, start - 1);
             var indent = currentLine.match(/^\s*/)[0];
             var pairs = {
                 '{': '}',
@@ -130,24 +120,36 @@
                 '<': '>',
                 '>': '<',
             };
-            var lastChar = currentLine.trim().slice(-1);
-            var nextChar = value.substring(start, start + 1);
+
+            lastChar = currentLine.trim().slice(-1);
             var newText;
+
             if (pairs[lastChar]) {  // 如果当前字符是开括号
                 if (nextChar === pairs[lastChar]) {  // 下一个字符是闭括号
                     newText = '\n' + indent + this.tabChar + '\n' + indent;
                 } else {
                     newText = '\n' + indent + ((lastChar !== '>') ? (this.tabChar) : '') ;
                 }
-                e.target.value = value.substring(0, start) + newText + value.substring(end);
-                e.target.selectionStart = e.target.selectionEnd = start + indent.length + ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (1 + this.tabLength) : 1);
+                e.target.value = value.substring(0, start - 1) + newText + value.substring(end - 1).replace(/\n/, '');
+                e.target.selectionStart = e.target.selectionEnd = start - 1 + indent.length + ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (1 + this.tabLength) : 1);
             } else {
                 newText = '\n' + indent;
-                e.target.value = value.substring(0, start) + newText + value.substring(end);
-                e.target.selectionStart = e.target.selectionEnd = start + newText.length;
+                e.target.value = value.substring(0, start - 1) + newText + value.substring(end - 1).replace(/\n/, '');
+                e.target.selectionStart = e.target.selectionEnd = start - 1 + newText.length;
             }
             return;
         }
+
+    }
+    
+    AreaEditor.prototype.onKeyDown = function(e) {
+        var start = e.target.selectionStart;
+        var end = e.target.selectionEnd;
+        var value = e.target.value;
+
+        if(['Backspace', 'Delete', 'Shift', 'Meta', 'Control', 'ctrl'].includes(e.key)) {
+            this.isPreventAuto = true;
+        };
 
         // TAB 相关
         if (e.key === 'Tab') {

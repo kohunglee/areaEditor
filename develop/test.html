@@ -7,11 +7,11 @@
  */
 (function (global, factory) {
     if (typeof define === 'function' && define.amd) {  // UMD 兼容模式
-        define([], factory);// AMD 支持
+        define([], factory);  // AMD 支持
     } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();// CommonJS 支持
+        module.exports = factory();  // CommonJS 支持
     } else {
-        global.AreaEditor = factory();// 浏览器全局变量
+        global.AreaEditor = factory();  // 浏览器全局变量
     }
 }(this, function () {
     'use strict';
@@ -20,9 +20,10 @@
      * 主构造函数
      * @param {HTMLElement|string} element Textarea元素或选择器
      */
-    function AreaEditor(element, options) {
+    function AreaEditor(element, options = {indentType : { type: 'space', count: 4 }}) {
         if (!(this instanceof AreaEditor)) { return new AreaEditor(element, options); }
         this.element = typeof element === 'string' ? document.querySelectorAll(element) : element;
+        this.indentType = options.indentType;
         this.init();
     }
 
@@ -33,15 +34,12 @@
                 console.error('AreaEditor: Missing element');
                 return;
             }
-    
+
             if (this.element[_i].tagName !== 'TEXTAREA') {
                 console.error('AreaEditor: The element must be a textarea');
                 return;
             }
-    
-            this.indentType = this._detectFirstIndent(this.element[_i].value);  // 缩进类型
-            this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // 缩进字符
-            this.tabLength = this.indentType.count;  // 缩进字符的长度
+
             this.setupEvents(this.element[_i]);
         }
         
@@ -55,26 +53,26 @@
         element.addEventListener('keyup', this.onKeyUp.bind(this));
     };
     
-    AreaEditor.prototype.isPreventAuto = false;  // 是否阻止自动脚本
-    
+    AreaEditor.prototype.isPreventAuto = false;  // 是否阻止一些指定的自动脚本
     AreaEditor.prototype.isPreventKEY = ['Backspace', 'Delete', 'Meta', 'Control', 'ctrl'];
-    
+    AreaEditor.prototype.beforeEnterScrollTop = 0;
+
     AreaEditor.prototype.onKeyUp = function(e) {
         if(this.isPreventKEY.includes(e.key)){
             this.isPreventAuto = false;
         }
     }
-    
+
     AreaEditor.prototype.onPaste = function(e) {
         this.isPreventAuto = true;
     }
-    
+
     AreaEditor.prototype.onInput = function(e) {
         if(this.isPreventAuto){
             this.isPreventAuto = false;
             return;
         }
-        
+
         var start = e.target.selectionStart;
         var end = e.target.selectionEnd;
         var value = e.target.value;
@@ -108,13 +106,13 @@
             e.target.value = value.substring(0, start) + pairChar + value.substring(start);
             e.target.selectionStart = e.target.selectionEnd = start;
         }
-        
-        // 回车键处理
-        if (lastChar === '\n') {
 
+        // 换行处理
+        if (lastChar === '\n') {
             var lineStart = value.lastIndexOf('\n', start - 2) + 1;
             var currentLine = value.substring(lineStart, start - 1);
             var indent = currentLine.match(/^\s*/)[0];
+            var newText;
             var pairs = {
                 '{': '}',
                 '[': ']',
@@ -122,10 +120,7 @@
                 '<': '>',
                 '>': '<',
             };
-
             lastChar = currentLine.trim().slice(-1);
-            var newText;
-
             if (pairs[lastChar]) {  // 如果当前字符是开括号
                 if (nextChar === pairs[lastChar]) {  // 下一个字符是闭括号
                     newText = '\n' + indent + this.tabChar + '\n' + indent;
@@ -133,21 +128,30 @@
                     newText = '\n' + indent + ((lastChar !== '>') ? (this.tabChar) : '') ;
                 }
                 e.target.value = value.substring(0, start - 1) + newText + value.substring(end - 1).replace(/\n/, '');
-                e.target.selectionStart = e.target.selectionEnd = start - 1 + indent.length + ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (1 + this.tabLength) : 1);
+                e.target.selectionStart = e.target.selectionEnd = start - 1 +
+                                          indent.length +
+                                          ((lastChar !== '>' || nextChar === pairs[lastChar]) ? (1 + this.tabLength) : 1);
             } else {
                 newText = '\n' + indent;
                 e.target.value = value.substring(0, start - 1) + newText + value.substring(end - 1).replace(/\n/, '');
                 e.target.selectionStart = e.target.selectionEnd = start - 1 + newText.length;
             }
+            if(this.beforeEnterScrollTop){
+                e.target.scrollTop = this.beforeEnterScrollTop;
+                this.beforeEnterScrollTop = 0;
+            }
             return;
         }
 
     }
-    
+
     AreaEditor.prototype.onKeyDown = function(e) {
         var start = e.target.selectionStart;
         var end = e.target.selectionEnd;
         var value = e.target.value;
+
+        this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // 缩进字符
+        this.tabLength = this.indentType.count;  // 缩进字符的长度
 
         if(this.isPreventKEY.includes(e.key)) {
             this.isPreventAuto = true;
@@ -172,8 +176,8 @@
                     e.target.value = contentArr.join('\n');
                     var lengthDiff = contentArrOriginal[startLine].length - contentArrOriginal[startLine].trimStart().length; // start 所在行有多少缩进
                     var moveLength = Math.min(this.tabLength, lengthDiff);
-                    var limitLineNum = this._arrSum(contentArr, startLine); // 计算 start 能减小到的最小值，比如防止start在开始时是在第5行，在删去缩进后，变到了第四行
-                    var startPoint = limitLineNum > start - moveLength - startLine ? limitLineNum + startLine : start - moveLength; // 兼容选择框起点选在了缩进处（也就是空格上）的情况
+                    var limitLineNum = this._arrSum(contentArr, startLine); // 防止 start 在开始时是在第 5 行，在删去缩进后，变到了第四行
+                    var startPoint = limitLineNum > start - moveLength - startLine ? limitLineNum + startLine : start - moveLength; // 兼容选择区左选在了缩进处
                     e.target.selectionStart = lengthDiff > 0 ? startPoint : start;
                     e.target.selectionEnd = end - (contentArrOriginal.join('\n').length - e.target.value.length);
                 } else {  // 只按下了 tab（增加缩进）
@@ -187,30 +191,27 @@
             }
         }
 
-    };
-
-    // 获取该文档的第一个缩进
-    AreaEditor.prototype._detectFirstIndent = function(fileContent) {
-        var lines = fileContent.split('\n');
-        for (var i = 0; i < lines.length; i++) {
-            var line = lines[i];
-            if (line.length > 0 && /^\s/.test(line)) {
-            var indent = line.match(/^\s+/)[0];
-            var type = indent.indexOf('\t') !== -1 ? 'tab' : 'space';
-            var count = (type === 'tab') ? 1 : indent.length;
-            return { type: type, count: count };
+        if (e.key === 'Backspace') {
+            var contentArr = value.split('\n');
+            var startLine = (value.substring(0, start).match(/\n/g) || []).length;
+            if(start === end && (/^[\s\t]*$/.test(contentArr[startLine]) && contentArr[startLine] !== '')){  // 当前行仅包含空格和换行符
+                e.target.selectionStart = this._arrSum(contentArr, startLine) + startLine;
+                e.target.selectionEnd = start;
             }
         }
-        return { type: 'space', count: 4 }; // 默认缩进是 4 个空格
+
+        if(e.key === 'Enter'){  // 记录滚动条高度，防止按下 Enter 后滚动条跳动
+            this.beforeEnterScrollTop = e.target.scrollTop;
+        }
     };
 
-     // 删去文本字符串前面缩进部分的几个字符数量
+    // 删去文本字符串前面缩进部分的几个字符数量
     AreaEditor.prototype._removeLeadingSpaces = function(str, n) {
         var regex = new RegExp("^([ \\t]{0,".concat(n, "})"));
         return str.replace(regex, '');
     };
 
-    // 此函数可计算字符串数组前 n 字符 length 之和
+    // 此函数可计算字符串数组前 n 个元素 length 之和
     AreaEditor.prototype._arrSum = function(a, n) {
         var s = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
         return a.slice(0, n).map(function (x) {

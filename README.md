@@ -40,7 +40,7 @@ Note: To avoid confusion, when pressing the ‌`backspace‌` key, it deletes sp
 
 ### 3. Smart bracket pairing‌
 
-When typing symbols like  <code>{ } [ ] ( ) &lt; > ' " `</code> , it auto-completes them like other code editors:
+When typing symbols like  <code>{ } [ ] ( ) ' " `</code> , it auto-completes them like other code editors:
 
 Example
 

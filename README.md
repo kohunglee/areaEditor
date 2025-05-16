@@ -1,8 +1,6 @@
 # areaEditor
 A lightweight (&lt;2kb) mini web-based editor using JavaScript to enhance &lt;textarea> with smart indentation &amp; bracket pairing for smoother coding.
 
-PS: areaEditor.js 2.0 is 2.08kb.
-
 ![image](https://github.com/user-attachments/assets/fcb09041-6a9e-4ca8-96fa-9261780089af)
 
 # demo

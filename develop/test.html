@@ -1,24 +1,25 @@
 <textarea rows="20" cols="50"></textarea>
 <script>
 /**
- * AreaEditor 1.1
+ * AreaEditor 2.0
  * @github.com/kohunglee/areaEditor
  * @license MIT
  */
 (function (global, factory) {
-    if (typeof define === 'function' && define.amd) {  // UMD 兼容模式
-        define([], factory);  // AMD 支持
+    if (typeof define === 'function' && define.amd) {  // UMD mode
+        define([], factory);  // AMD
     } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();  // CommonJS 支持
+        module.exports = factory();  // CommonJS
     } else {
-        global.AreaEditor = factory();  // 浏览器全局变量
+        global.AreaEditor = factory();
     }
 }(this, function () {
     'use strict';
 
     /**
-     * 主构造函数
-     * @param {HTMLElement|string} element Textarea元素或选择器
+     * Main constructor
+     * @param {HTMLElement|string} Textarea Element or Textarea  Selector
+     * @param {Object} Options Configuration Item
      */
     function AreaEditor(element, options = {indentType : { type: 'space', count: 4 }}) {
         if (!(this instanceof AreaEditor)) { return new AreaEditor(element, options); }
@@ -27,7 +28,7 @@
         this.init();
     }
 
-    // 初始化
+    // Initialization
     AreaEditor.prototype.init = function() {
         for(var _i = 0; _i < this.element.length; _i++){
             if (!this.element[_i]) {
@@ -45,7 +46,7 @@
         
     };
 
-    // 设置事件监听
+    // Set event listener
     AreaEditor.prototype.setupEvents = function(element) {
         element.addEventListener('keydown', this.onKeyDown.bind(this));
         element.addEventListener('input', this.onInput.bind(this));
@@ -53,7 +54,7 @@
         element.addEventListener('keyup', this.onKeyUp.bind(this));
     };
     
-    AreaEditor.prototype.isPreventAuto = false;  // 是否阻止一些指定的自动脚本
+    AreaEditor.prototype.isPreventAuto = false;  // Should some auto-scripts be blocked?
     AreaEditor.prototype.isPreventKEY = ['Backspace', 'Delete', 'Meta', 'Control', 'ctrl'];
     AreaEditor.prototype.beforeEnterScrollTop = 0;
 
@@ -80,7 +81,7 @@
         var lastChar = value[start - 1];
         var secondLastChar = value[start - 2];
 
-        // 自动补全括号
+        // Autocomplete brackets
         var autoPairs = { 
             '{': '}',
             '[': ']',
@@ -88,16 +89,15 @@
             '"': '"',
             "'": "'",
             '`': '`',
-            '<': '>'
         };
-        if (['{', '(', '[', '<', '"', "'", '`', ']', '}', ')', '>'].includes(lastChar) && start === end) {
+        if (['{', '(', '[', '"', "'", '`', ']', '}', ')'].includes(lastChar) && start === end) {
             if(this.isPreventAuto){
                 this.isPreventAuto = false;
                 return;
             }
             var pairChar = autoPairs[lastChar]  || '';
             for (var leftBrace in autoPairs) {
-                if (leftBrace === secondLastChar && autoPairs[leftBrace] === lastChar && nextChar === lastChar) {  // 如果已经补全，但依然手动补全，则忽略
+                if (leftBrace === secondLastChar && autoPairs[leftBrace] === lastChar && nextChar === lastChar) {  // If the user still chooses to manually complete it, it should be ignored.
                     e.target.value = value.substring(0, start) + value.substring(start + 1);
                     e.target.selectionStart = e.target.selectionEnd = start;
                     return;
@@ -107,7 +107,7 @@
             e.target.selectionStart = e.target.selectionEnd = start;
         }
 
-        // 换行处理
+        // Line break processing
         if (lastChar === '\n') {
             var lineStart = value.lastIndexOf('\n', start - 2) + 1;
             var currentLine = value.substring(lineStart, start - 1);
@@ -121,8 +121,8 @@
                 '>': '<',
             };
             lastChar = currentLine.trim().slice(-1);
-            if (pairs[lastChar]) {  // 如果当前字符是开括号
-                if (nextChar === pairs[lastChar]) {  // 下一个字符是闭括号
+            if (pairs[lastChar]) {  // If the current character is open brackets
+                if (nextChar === pairs[lastChar]) {  // The next character is closed brackets
                     newText = '\n' + indent + this.tabChar + '\n' + indent;
                 } else {
                     newText = '\n' + indent + ((lastChar !== '>') ? (this.tabChar) : '') ;
@@ -150,17 +150,17 @@
         var end = e.target.selectionEnd;
         var value = e.target.value;
 
-        this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // 缩进字符
-        this.tabLength = this.indentType.count;  // 缩进字符的长度
+        this.tabChar = (this.indentType.type === 'tab') ? '\t' : Array(this.indentType.count + 1).join(' ');  // Indented characters
+        this.tabLength = this.indentType.count;  // The length of indented characters
 
         if(this.isPreventKEY.includes(e.key)) {
             this.isPreventAuto = true;
         };
 
-        // TAB 相关
+        // TAB
         if (e.key === 'Tab') {
             e.preventDefault();
-            if (start === end) {  // 光标未选中任何字符
+            if (start === end) {  // No characters are selected in the cursor
                 e.target.value = value.substring(0, start) + this.tabChar + value.substring(end);
                 e.target.selectionStart = e.target.selectionEnd = start + this.tabLength;
                 return;
@@ -169,18 +169,18 @@
                 var contentArrOriginal = value.split('\n');
                 var startLine = (value.substring(0, start).match(/\n/g) || []).length;
                 var endLine = (value.substring(0, end).match(/\n/g) || []).length;
-                if (e.shiftKey) {  // 如果按下了 shift（删去缩进）
+                if (e.shiftKey) {  // If Shift is pressed (remove indentation)
                     for (var _i = startLine; _i <= endLine; _i++) {
                         contentArr[_i] = this._removeLeadingSpaces(contentArr[_i], this.tabLength);
                     }
                     e.target.value = contentArr.join('\n');
-                    var lengthDiff = contentArrOriginal[startLine].length - contentArrOriginal[startLine].trimStart().length; // start 所在行有多少缩进
+                    var lengthDiff = contentArrOriginal[startLine].length - contentArrOriginal[startLine].trimStart().length; // How many indents are there in the *start* line
                     var moveLength = Math.min(this.tabLength, lengthDiff);
-                    var limitLineNum = this._arrSum(contentArr, startLine); // 防止 start 在开始时是在第 5 行，在删去缩进后，变到了第四行
-                    var startPoint = limitLineNum > start - moveLength - startLine ? limitLineNum + startLine : start - moveLength; // 兼容选择区左选在了缩进处
+                    var limitLineNum = this._arrSum(contentArr, startLine); // Prevent cursor from deforming after deletion
+                    var startPoint = limitLineNum > start - moveLength - startLine ? limitLineNum + startLine : start - moveLength; // If the indented area is selected on the left
                     e.target.selectionStart = lengthDiff > 0 ? startPoint : start;
                     e.target.selectionEnd = end - (contentArrOriginal.join('\n').length - e.target.value.length);
-                } else {  // 只按下了 tab（增加缩进）
+                } else {  // Only the Tab (increase indentation) 
                     for (var _i = startLine; _i <= endLine; _i++) {
                         contentArr[_i] = this.tabChar + contentArr[_i];
                     }
@@ -194,24 +194,24 @@
         if (e.key === 'Backspace') {
             var contentArr = value.split('\n');
             var startLine = (value.substring(0, start).match(/\n/g) || []).length;
-            if(start === end && (/^[\s\t]*$/.test(contentArr[startLine]) && contentArr[startLine] !== '')){  // 当前行仅包含空格和换行符
+            if(start === end && (/^[\s\t]*$/.test(contentArr[startLine]) && contentArr[startLine] !== '')){  // The current line contains only ' ' and '\t'
                 e.target.selectionStart = this._arrSum(contentArr, startLine) + startLine;
                 e.target.selectionEnd = start;
             }
         }
 
-        if(e.key === 'Enter'){  // 记录滚动条高度，防止按下 Enter 后滚动条跳动
+        if(e.key === 'Enter'){  // Record scrollbar height, to prevent screen jumping after pressing Enter
             this.beforeEnterScrollTop = e.target.scrollTop;
         }
     };
 
-    // 删去文本字符串前面缩进部分的几个字符数量
+    // Delete n characters in the indented part of the string
     AreaEditor.prototype._removeLeadingSpaces = function(str, n) {
         var regex = new RegExp("^([ \\t]{0,".concat(n, "})"));
         return str.replace(regex, '');
     };
 
-    // 此函数可计算字符串数组前 n 个元素 length 之和
+    // Sum of the lengths of `n` elements before the array
     AreaEditor.prototype._arrSum = function(a, n) {
         var s = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
         return a.slice(0, n).map(function (x) {
@@ -221,8 +221,7 @@
 
     return AreaEditor;
 }));
-
 </script>
 <script>
-    var editor = new AreaEditor('textarea');
+    var editor = new AreaEditor('textarea', {indentType : { type: 'space', count: 4 }});
 </script>

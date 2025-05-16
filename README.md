@@ -80,16 +80,16 @@ Download the complete package from https://github.com/kohunglee/areaEditor or [c
 
 We provide three versions of the file:
 
-- Development version (with comments, raw version 7.8KB)
-- Standard minified version (3.23KB)
-- Ultra-minified version (1.74KB)
+- Development version (with comments, raw version 9.4KB)
+- Standard minified version (4.06KB)
+- Ultra-minified version (1.98KB)
 
 Their respective jsDelivr URLs are:
 
 ```markdown
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.js
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.min.js
-https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.x.min.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.2.0.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.2.0.min.js
+https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.2.0.x.min.js
 ```
 
 ### Activation Method
@@ -98,9 +98,9 @@ You can use it in HTML like this:
 
 ```html
 <textarea></textarea>
-<script src="https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.1.1.x.min.js" integrity="sha384-+vfsvi7N0nVQf4Tblj94ynWzrYyimaK1LTSLBS5XYZ2LaDUEGc5OUADMEbTbTDrr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/kohunglee/areaeditor/src/areaeditor.2.0.x.min.js" integrity="sha256-sP3tIYbNNHejSjhs3X0SBLULz54YEbR3g1dSJMvpCME=" crossorigin="anonymous"></script>
 <script>
-    var editor = new AreaEditor('textarea');
+    var editor = new AreaEditor('textarea', {indentType : { type: 'space', count: 4 }});
 </script>
 ```
 

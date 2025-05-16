@@ -110,6 +110,8 @@ The parameter for `AreaEditor()` works the same way as `document.querySelectorAl
 var editor = new AreaEditor('textarea'); // Selects all textarea elements
 var editor = new AreaEditor('.code-editor'); // Selects all textarea elements with class "code-editor"
 var editor = new AreaEditor('#code-editor'); // Selects the textarea element with ID "code-editor"
+
+var editor = new AreaEditor('#code-editor',  {indentType : { type: 'space', count: 4 });  // Configure indentation, 'space' is a space indentation, 'tab' is '\t' indentation, 'count' is the number
 ```
 
 ## Why This Design?‌

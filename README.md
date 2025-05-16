@@ -112,6 +112,8 @@ var editor = new AreaEditor('.code-editor'); // Selects all textarea elements wi
 var editor = new AreaEditor('#code-editor'); // Selects the textarea element with ID "code-editor"
 
 var editor = new AreaEditor('#code-editor',  {indentType : { type: 'space', count: 4 });  // Configure indentation, 'space' is a space indentation, 'tab' is '\t' indentation, 'count' is the number
+
+editor.indentType.type = 'tab'; // This is the way to dynamic modification of indentation
 ```
 
 ## Why This Design?‌

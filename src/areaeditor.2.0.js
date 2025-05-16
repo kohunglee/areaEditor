@@ -53,7 +53,7 @@
     };
     
     AreaEditor.prototype.isPreventAuto = false;  // Should some auto-scripts be blocked?
-    AreaEditor.prototype.isPreventKEY = ['Backspace', 'Delete', 'Meta', 'Control', 'ctrl'];
+    AreaEditor.prototype.isPreventKEY = ['Backspace', 'Delete', 'Meta', 'Control', 'Ctrl'];
     AreaEditor.prototype.beforeEnterScrollTop = 0;
 
     AreaEditor.prototype.onKeyUp = function(e) {
